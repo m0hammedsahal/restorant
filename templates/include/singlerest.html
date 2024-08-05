@@ -1,0 +1,69 @@
+{% extends 'base/web-base.html' %} 
+{% load static %} 
+{% block container %}
+{% include 'include/header.html' %}
+
+
+    <section id="home">
+        <section class="">
+            <section class="spotlight px-[23%]">
+                <div class="px-[5%]">
+                    <div class="card flex p-[15px] rounded-[10px] w-[] mt-[40px]" style="box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06);">
+                        <img class="w-[170px] mr-[20px] rounded-[7px]" src="{{singlerest.image.url}}" alt="">
+                        <div class="right items-center">
+                            <h3 class="text-[18px] text-gray-700 font-[600] mb-[5px]">{{singlerest.name}}</h3>
+                            <p class="text-[12px] text-gray-600 font-[] mb-[5px]">{{singlerest.description}}</p>
+                            <ul class="flex mb-[5px]">
+                                <li class="flex text-[15px] text-gray-600 font-[600] mr-[20px] mb-[5px]">
+                                    <img class="w-[17px] h-[17px] mr-[7px] mt-[3px]" src="{% static 'web/images/star.png' %}" alt="">{{singlerest.rating}}
+                                </li>
+                                <li class="flex text-[15px] text-gray-600 font-[600]">
+                                    <img class="w-[17px] h-[17px] mr-[7px] mt-[3px]" src="{% static 'web/images/clock.png' %}" alt="">{{singlerest.time}}
+                                </li>
+                            </ul>
+                            <h6 class="text-red-500 text-[12px] font-bold flex mt-[]"><img class="w-[17px] h-[17px] mr-[7px] mt-[]" src="{% static 'web/images/discount.' %}png" alt="">**UPTO {{singlerest.discount}}% DISCOUNT</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-[5%]">
+                    {% for foodcategory in singlerest.foodcategory_set.all %}
+                        <h2 class="flex text-[22px] text-gray-700 font-[600] mt-[70px] mb-[40px]">{{foodcategory.name}}</h2>
+                        {% for fooditem, quantity in prod_with_qty %}
+                        <div class="border-b-[1px] border-gray-300 mb-[20px] mt-[20px]"></div>
+                        <div class="flex justify-between">
+                            <div class="left">
+                                {% if fooditem.is_veg %}
+                                <img src="{% static 'web/images/veg.png' %}" class="w-[15px]">
+                                {% else %}
+                                <img src="{% static 'web/images/non.png' %}" class="w-[15px]">
+                                {% endif %}
+                                <h6 class="text-[17px] text-gray-700 font-[700] mb-[5px]">{{fooditem.name}}</h6>
+                                <h6 class="text-[17px] text-gray-600 font-[700] mb-[5px]">₹ {{fooditem.price}}</h6>
+                                
+                                {% if quantity > 0 %}
+                                    <li class="flex mr-[100px] border-2 border-gray-200 rounded-[10px]">
+                                        <a href="{% url 'web:cart_minus' id=fooditem.id %}" id="addmore" class="h-[30px] w-[30px] py-[2px] px-[10px] bg-green-400 text-white text-[15px] font-[600] rounded-l-lg">-</a>
+                                        <p class="h-[30px] w-[30px] py-1 px-[12px] bg-white text-black text-[15px] font-[600]">{{quantity}}</p>
+                                        <a href="{% url 'web:cart_plus' id=fooditem.id %}" class="h-[30px] w-[30px] py-[3px] px-[9px] bg-green-400 text-white text-[15px] font-[600] rounded-r-lg">+</a>
+                                    </li>
+                                {% else %}
+                                    <a href="{% url 'web:add_cart' id=fooditem.id %}" id="add" class="px-[11px] py-[3px] bg-green-500 text-[11px] text-white font-[600] rounded border-2 border-gray-200">ADD</a>
+                                {% endif %}
+                            </div>
+                            <img class="w-[130px] mr-[px] rounded-[7px]" src="{{fooditem.image.url}}" alt="">
+                        </div>
+                        {% endfor %}
+                        <div class="border-b-[4px] border-gray-300 mb-[20px] mt-[20px]"></div>
+                    {% endfor %}
+
+                </div>
+                <div class="mt-[px] flex justify-between px-[50px] py-[12px] rounded-xl bg-red-500 mb-[100px]">
+                    <p class="text-white font-[600]">{{carts_count}} item |{{cartsa.amouunt}}</p>
+                    <a href="{% url 'web:cart' %}" class="font-[600] flex text-white">View Cart<img class="w-[20px] h-[20px] ml-[5px] mt-[3px]" src="{% static 'web/images/cart.png' %}" alt=""></a>
+                </div>
+
+            </section>
+        </section>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base/web-base.html' %} 
+{% load static %} 
+{% block container %}
+
+
+    <section id="home">
+        <section class="">
+            <header class="px-[3%] h-[70px] flex justify-between pr-[45%] items-center">
+                    <img class="w-[25px]" src="/images/arrow.png" alt="">
+                    <h1 class="text-[25px] text-gray-600 font-[700] mb-[px]">Checkout</h1>
+            </header>
+            <section class="spotlight max-w-[620px] m-auto mt-[20px]">
+                <div class="cart p-[20px] mb-[10px] rounded-[10px]">
+                    <h3 class="text-[18px] text-gray-700 font-[600] mb-[20px]">BILL DETAILS</h3>
+                    <ul class="flex justify-between items-center">
+                        <li class="text-[16px] text-gray-600 font-[600] mb-[px]">Item Total</li>
+                        <li class="text-[16px] text-gray-600 font-[600]">₹ {{cart_amount}}</li>
+                    </ul>
+                    <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
+                    <ul class="flex justify-between items-center">
+                        <li class="text-[16px] text-gray-600 font-[600] mb-[px]">Offer Applied</li>
+                        <li class="text-[16px] text-gray-600 font-[600]"> {{offer_applied}}% <br> ₹ {{offer}}</li>
+                    </ul>
+                    <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
+                    <ul class="flex justify-between items-center">
+                        <li class="text-[16px] text-gray-600 font-[600] mb-[px]">Delivery Charges (40KM)</li>
+                        <li class="text-[16px] text-gray-600 font-[600]">₹ {{delivery_charges}}</li>
+                    </ul>
+                    <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
+                    <ul class="flex justify-between items-center">
+                        <li class="text-[17px] text-black font-[600] mb-[px]">To Pay</li>
+                        <li class="text-[17px] text-black font-[600]">₹ {{final_amount}}</li>
+                    </ul>
+                </div>
+                <div class="cart p-[20px] mb-[10px] rounded-[10px]">
+                    <h3 class="text-[18px] text-gray-700 font-[600] mb-[10px]">PAYMENT METHODS</h3>
+                    <form action="">
+                        <input type="radio" placeholder="">
+                        <LAbel class="text-[16px] text-gray-700 font-[600] mb-[10px]">CREDIT/DEBIT/UPT</LAbel>
+                        <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
+                        <input type="radio" placeholder="">
+                        <LAbel class="text-[16px] text-gray-700 font-[600] mb-[10px]">COD</LAbel>
+                    </form>
+                </div>
+                <button class="mt-[20px] flex justify-center w-[100%] py-[8px] rounded-xl bg-red-600 mb-[50px] text-[17px] font-[600] text-white">PLACE ORDER</button>
+            </section>
+        </section>
+    </section>
+
+    
+    {% endblock %}

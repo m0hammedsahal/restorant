@@ -1,0 +1,111 @@
+{% extends 'base/web-base.html' %} 
+{% load static %} 
+{% block container %}
+{% if restorant %}
+
+
+    <section id="home">
+        <section class="">
+            <header class="px-[3%] h-[70px] flex justify-between pr-[45%] items-center">
+                    <img class="w-[25px]" src="{% static 'web/images/arrow.png' %}" alt="">
+                    <h1 class="text-[25px] text-gray-600 font-[700] mb-[px]">Cart</h1>
+            </header>
+            <section class="spotlight px-[23%]">
+                <div class="">
+
+                    <a href="{% url 'web:singlerest' id=singlerest.id %}" class="block">
+
+                    <div class="card flex p-[15px] rounded-[10px] w-[] mt-[40px]" style="box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06);">
+                        <img class="w-[170px] mr-[20px] rounded-[7px]" src="{{singlerest.image.url}}" alt="">
+                        <div class="right items-center">
+                            <h3 class="text-[18px] text-gray-700 font-[600] mb-[5px]">{{singlerest.name}}</h3>
+                            <p class="text-[12px] text-gray-600 font-[] mb-[5px]">{{singlerest.description}}</p>
+                            <ul class="flex mb-[5px]">
+                                <li class="flex text-[15px] text-gray-600 font-[600] mr-[20px] mb-[5px]">
+                                    <img class="w-[17px] h-[17px] mr-[7px] mt-[3px]" src="{% static 'web/images/star.png' %}" alt="">{{singlerest.rating}}
+                                </li>
+                                <li class="flex text-[15px] text-gray-600 font-[600]">
+                                    <img class="w-[17px] h-[17px] mr-[7px] mt-[3px]" src="{% static 'web/images/clock.png' %}" alt="">{{singlerest.time}}
+                                </li>
+                            </ul>
+                            <h6 class="text-red-500 text-[12px] font-bold flex mt-[]"><img class="w-[17px] h-[17px] mr-[7px] mt-[]" src="{% static 'web/images/discount.' %}png" alt="">**UPTO {{singlerest.discount}}% DISCOUNT</h6>
+                        </div>
+                    </div>
+                    </a>
+                    <div class="cart p-[20px] mb-[20px] rounded-[10px] mt-[10px]">
+                        <h3 class="text-[18px] text-gray-700 font-[600] mb-[5px]">ITEMS IN CART</h3>
+                        
+                        {% for cart in carts %}
+                        <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
+                        <ul class="flex justify-between items-center">
+                            <li class="text-[18px] text-gray-700 font-[600] mb-[px]">{{ cart.product }}<p class="text-[19px] text-black font-[600] mb-[px]">{{ cart.amouunt }}</p></li>
+                            <li class="flex mr-[100px] border-2 border-gray-200 rounded-[10px]">
+                                <a href="{% url 'web:cart_minus' id=cart.product.id %}" class="h-[45px] w-[30px] p-[8px] bg-green-400 text-white text-[15px] font-[600] rounded-l-lg ">-</a>
+                                <p class="h-[45px] w-[30px] p-[10px] bg-white text-black text-[15px] font-[600]">{{ cart.quantity }}</p>
+                                <a href="{% url 'web:cart_plus' id=cart.product.id %}" class="h-[45px] w-[30px] p-[8px] bg-green-400 text-white text-[15px] font-[600] rounded-r-lg ">+</a>
+                            </li>
+                        </ul>
+                        <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+                <div class="cart p-[15px] rounded-[10px] w-[] mt-[10px] mb-[20px]">
+                    <div class="flex justify-between">
+                        <h3 class="text-[20px] font-[] text-gray-400">Cupon Code</h3>
+                        <button class="px-[35px] py-[7px] bg-green-500 text-[15px] text-white font-[600] rounded-[8px]">APPLAY</button>
+                    </div>
+                    <div class="border-b-[1px] border-gray-300 mt-[10px]"></div>
+                    <a href="{% url 'web:offers' %}" class="text-red-500 text-[13px] font-bold flex mt-[20px] mb-[10px]"><img class="w-[17px] h-[17px] mr-[7px] mt-[]" src="{% static 'web/images/discount.png' %}" alt="">VIEW ALL OFFERS</a>
+                </div>
+                <div class="cart p-[20px] mb-[10px] rounded-[10px]">
+                    <h3 class="text-[18px] text-gray-700 font-[600] mb-[20px]">BILL DETAILS</h3>
+                    <ul class="flex justify-between items-center">
+                        <li class="text-[16px] text-gray-600 font-[600] mb-[px]">Item Total</li>
+                        <li class="text-[16px] text-gray-600 font-[600]">₹ {{cart_amount}}</li>
+                    </ul>
+                    <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
+                    <ul class="flex justify-between items-center">
+                        <li class="text-[16px] text-gray-600 font-[600] mb-[px]">Offer Applied</li>
+                        <li class="text-[16px] text-gray-600 font-[600]"> {{offer_applied}}% <br> ₹ {{offer}}</li>
+                    </ul>
+                    <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
+                    <ul class="flex justify-between items-center">
+                        <li class="text-[16px] text-gray-600 font-[600] mb-[px]">Delivery Charges (40KM)</li>
+                        <li class="text-[16px] text-gray-600 font-[600]">₹ {{delivery_charges}}</li>
+                    </ul>
+                    <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
+                    <ul class="flex justify-between items-center">
+                        <li class="text-[17px] text-black font-[600] mb-[px]">To Pay</li>
+                        <li class="text-[17px] text-black font-[600]">₹ {{final_amount}}</li>
+                    </ul>
+                </div>
+                <div class="cart p-[15px] rounded-[10px] w-[] mt-[10px] mb-[20px]">
+                    <h3 class="text-[18px] text-gray-700 font-[600] mb-[px]">DELIVER TO</h3>
+                    <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-[px] font-[] text-gray-600">Kuttippuram, Kerala 679571, Inidia, Home Address</h3>
+                        <button class="px-[35px] py-[7px] bg-green-500 text-[15px] text-white font-[600] rounded-[8px]">CHANGE</button>
+                    </div>
+                </div>
+                <a href="{% url 'web:checkout' %}" class="mt-[px] flex justify-between px-[290px] py-[8px] rounded-xl bg-red-600 mb-[50px] text-[17px] font-[600] text-white">CONTINOU</a>
+            </section>
+        </section>
+    </section>
+    {% else %}
+    <section class="bg-gray-100 flex items-center justify-center min-h-screen">
+        <header class="px-[3%] h-[70px] flex justify-between pr-[45%] items-center">
+            <img class="w-[25px]" src="{% static 'web/images/arrow.png' %}" alt="">
+            <h1 class="text-[25px] text-gray-600 font-[700] mb-[px]">Cart</h1>
+        </header>
+        <div class="bg-white p-12 rounded-lg shadow-lg text-center max-w-md">
+            <h1 class="text-4xl font-bold text-gray-800 mb-6">Your Cart is Empty</h1>
+            <p class="text-lg text-gray-600 mb-8">It looks like you haven't added anything to your something you love.</p>
+            <a href="/shop" class="inline-block bg-green-500 text-white py-3 px-8 rounded-lg text-lg font-semibold hover:bg-green-600 transition duration-300">
+                Shop Now
+            </a>
+        </div>
+    </section>
+    
+    {% endif %}  
+    {% endblock %}

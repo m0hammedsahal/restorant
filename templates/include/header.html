@@ -1,0 +1,76 @@
+{% load static %}
+
+<header class="h-[80px] shadow-md">
+    <section class="wrapper h-full flex justify-between items-center">
+      <div class="l">
+        <h1 class="r">
+          <a href="index.html" class="t"
+            ><img
+              src="{% static 'web./images/logo.png' %}"
+              alt="logo"
+              class="w-[90px]"
+          /></a>
+        </h1>
+      </div>
+      <div class="hidden md:block ml-[22%]">
+        <ul class="flex justify-center">
+          <li class="mr-7">
+            <a href="/" class="flex justify-normal items-center text-[18px]"
+              ><img
+                src="{% static 'web./images/home.png' %}"
+                alt="home"
+                class="w-[18px] mr-2"
+              />Home</a
+            >
+          </li>
+          <li class="mr-7">
+            <a href="#" class="flex justify-normal items-center text-[18px]"
+              ><img
+                src="{% static 'web./images/search.png' %}"
+                alt="Search"
+                class="w-[18px] mr-2"
+              />Search</a
+            >
+          </li>
+          <li class="mr-7">
+            <a
+              href="{% url 'web:cart' %}"
+              class="flex justify-normal items-center text-[18px]"
+              ><img
+                src="{% static 'web./images/bag.png' %}"
+                alt="Cart"
+                class="w-[18px] mr-2"
+              />Cart</a
+            >
+          </li>
+          <li class="mr-7">
+            <a
+              href="{% url 'web:login' %}"
+              class="flex justify-normal items-center text-[18px]"
+              ><img
+                src="{% static 'web./images/user.png' %}"
+                alt="Account"
+                class="w-[18px] mr-2"
+              />Account</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="flex justify-end items-center ml-[7%]">
+        <img
+          src="{% static 'web./images/map.png' %}"
+          alt=""
+          class="w-[18px] mr-3"
+        />
+        <p
+          class="text-[18px] text-gray-500 pb-1 font-semibold border-b-2 border-yellow-400"
+        >
+          Tirur, Malappuram
+        </p>
+      </div>
+      <a href="{% url 'web:logout' %}" class="flex">
+        <i id="logout" class="fa-solid fa-right-from-bracket rotate-180"></i>
+        <p id="lo" class="font-bold"></p>
+      </a>
+    </section>
+  </header>

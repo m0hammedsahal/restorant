@@ -1,0 +1,49 @@
+{% extends 'base/web-base.html' %} 
+{% load static %} 
+{% block container %}
+
+
+
+    <section id="home">
+        <section class="">
+            <header class="px-[3%] h-[70px] flex justify-between pr-[45%] items-center">
+                    <a href="{{ previous_page }}"><img class="w-[25px]" src="{% static 'web/images/arrow.png' %}" alt=""></a>
+                    <h1 class="text-[25px] text-gray-400 font-[700] mb-[px]">Offers</h1>
+            </header>
+            <section class="spotlight px-[27%] mt-[40px]">
+                <div class="card p-[15px] rounded-xl border-2 border-gray-200 flex justify-between mb-[20px]">
+                    <div class="mb-[10px]">
+                        <h3 class="text-[17px] text-gray-400 font-[700] mb-[15px]">{{offer_cupen.offer_code}}</h3>
+                        <p class="text-[15px] font-[700] text-red-600 border-b-2 border-gray-200">maximum Discout Upto ₹ 120 on Orders Above 200</p>
+                    </div>
+                    <button class="px-[20px] py-[px] h-[33px] bg-green-500 text-[14px] text-white font-[600] rounded-[8px]">APPLAY</button>
+                </div>
+                <div class="card p-[15px] rounded-xl border-2 border-gray-200 flex justify-between mb-[20px]">
+                    <div class="mb-[10px]">
+                        <h3 class="text-[17px] text-gray-400 font-[700] mb-[15px]">{{offer_cupen.offer_code}}</h3>
+                        <p class="text-[15px] font-[700] text-red-600 border-b-2 border-gray-200">maximum Discout Upto ₹ 50 on Orders Above 500</p>
+                    </div>
+                    <button class="px-[20px] py-[px] h-[33px] bg-gray-400 text-[14px] text-white font-[600] rounded-[8px]">APPLAY</button>
+                </div>
+                {% if previous_page %}
+                    <a href="{{ previous_page }}">Go Back</a>
+                {% else %}
+                    <a href="/">Go Back</a>
+                {% endif %}
+                {% for offer_cupen in offer_cupens %}  
+                <div class="card p-[15px] rounded-xl border-2 border-gray-200 flex justify-between mb-[20px]">
+                    <div class="mb-[10px]">
+                        <h3 class="text-[17px] text-gray-400 font-[700] mb-[15px]">{{offer_cupen.offer_code}}</h3>
+                        <p class="text-[15px] font-[700] text-red-600 border-b-2 border-gray-200">{{offer_cupen.offer_description}}</p>
+                    </div>
+                    <button class="px-[20px] py-[px] h-[33px] bg-gray-400 text-[14px] text-white font-[600] rounded-[8px]">APPLAY</button>
+                </div>
+                {% endfor %}
+
+            </section>
+        </section>
+    </section>
+
+
+
+    {% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base/web-base.html' %}
+
+{% load static %}
+
+{% block container %}
+
+    <section class="grid col-span-1 md:grid-cols-2 gap-5 h-screen">
+        <div class="col-span-1 hidden md:flex">
+            <img src="{% static 'web/images/rest2.png' %}" alt="image" class="w-full">
+        </div>
+        <div class="col-span-1 h-screen flex justify-center items-center">
+            <div class="text-center items-center">
+                <h1 class="text-[32px] font-semibold mb-5">SIGN UP NOW</h1>
+                <P class="w-[90%] md:w-[70%] mb-5 m-auto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est repellendus laboriosam architecto impedit</P>
+                <form action="" class="w-[90%] md:w-[70%] m-auto" method="post">
+                    {% csrf_token %}
+                    <input type="text" placeholder="Enter your First Name" class="w-full outline-none border rounded-2xl py-3 px-5 mb-5" name="first_name">
+                    <input type="text" placeholder="Enter your Last Name" class="w-full outline-none border rounded-2xl py-3 px-5 mb-5" name="last_name">
+                    <input type="text" placeholder="Enter your Email" class="w-full outline-none border rounded-2xl py-3 px-5 mb-5" name="email">
+                    <input type="password" placeholder="Enter your Password" class="w-full outline-none border rounded-2xl py-3 px-5" name="password">
+                    <button class="py-3 px-5 bg-red-500 text-white text-[14px] font-semibold rounded-xl mt-5" type="submit" value="register">Sign Up</button>
+                </form>
+                {% if error %}
+                <p>{{ message }}</p>
+                {% endif %}
+                <p class="text-[14px] mt-5">Already Have an Account <a class="text-red-500" href="{% url 'web:login' %}">LOGIN</a></p>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

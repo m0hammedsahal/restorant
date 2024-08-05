@@ -1,0 +1,69 @@
+{% extends 'base/web-base.html' %} 
+{% load static %} 
+{% block container %}
+
+
+    <section id="home">
+        <section class="">
+            <header class="px-[3%] h-[70px] flex justify-between pr-[45%] items-center">
+                    <img class="w-[25px]" src="/images/arrow.png" alt="">
+                    <h1 class="text-[25px] text-gray-600 font-[700] mb-[px]">ACCOUNT</h1>
+            </header>
+            <section class="spotlight px-[3%] max-w-[620px] m-auto mt-[40px]">
+                
+                <div class="right">
+                    <h3 class="text-[18px] text-gray-600 font-[700] mb-[20px]">Recent Orders</h3>
+                    <div class="card p-[20px] rounded-2xl border-2 border-gray-200">
+                        <div class="flex items-center">
+                            <img class="w-[70px] mr-[20px] rounded-[7px]" src="/images/rest1.png" alt="">
+                            <ul class="">
+                                <li class="text-[15px] text-gray-700 font-[700] mb-[10px] mt-[5px]">AL Fahal Full</li>
+                                <li class="text-[15px] text-gray-700 font-[700] mb-[5px]">₹ 330 | 2 Item</li>
+                            </ul>
+                            <p class="text-[15px] text-gray-700 font-[700] ml-[100px] border-b-2 border-gray-700 mb-[40px]">#164</p>
+                        </div>
+                        <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
+                        <div class="flex justify-between items-center">
+                            <button class="flex mt-[px] px-[20px] w-[160px] py-[7px] bg-green-500 text-[17px] text-white font-[600] rounded-[8px] border-2 border-gray-200">TRACK ORDER</button>
+                            <p class="text-[16px] font-[700] text-red-600">Preparing</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-[20px] rounded-2xl border-2 border-gray-200 mt-[20px]">
+                        <div class="flex items-center">
+                            <img class="w-[70px] mr-[20px] rounded-[7px]" src="/images/rest1.png" alt="">
+                            <ul class="">
+                                <li class="text-[15px] text-gray-700 font-[700] mb-[10px] mt-[5px]">AL Fahal Full</li>
+                                <li class="text-[15px] text-gray-700 font-[700] mb-[5px]">₹ 330 | 2 Item</li>
+                            </ul>
+                            <p class="text-[15px] text-gray-700 font-[700] ml-[100px] border-b-2 border-gray-700 mb-[40px]">#164</p>
+                        </div>
+                        <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
+                        <div class="flex justify-between items-center">
+                            <button class="flex mt-[px] px-[20px] w-[160px] py-[7px] bg-green-500 text-[17px] text-white font-[600] rounded-[8px] border-2 border-gray-200">TRACK ORDER</button>
+                            <p class="text-[16px] font-[700] text-red-600">Preparing</p>
+                        </div>
+                    </div>
+                    <div class="left mr-[40px] mt-[20px]">
+                        <div class="top flex p-[20px] rounded-2xl border-2 border-gray-200">
+                            <img src="/images/man.png" alt="" class="w-[90px]">
+                            <ul class="ml-[20px]">
+                                <li class="text-[15px] text-gray-700 font-[600] mb-[5px]">MOHAMMED adil</li>
+                                <li class="text-[16px] text-gray-700 font-[600] mb-[5px]">+91 9766827885</li>
+                                <li class="text-[16px] text-gray-700 font-[600] mb-[px]">Jamal@tegfly.in</li>
+                            </ul> 
+                        </div>
+                        <div class="px-[5%]">
+                            <button class="flex mt-[20px] px-[20px] w-[100%] py-[7px] bg-green-500 text-[17px] text-white font-[600] rounded-[8px] border-2 border-gray-200"><img src="/images/address.png" alt="" class="w-[25px] mr-[15px]">Manage Addresses</button>
+                            <button class="flex mt-[20px] px-[20px] w-[100%] py-[7px] bg-green-500 text-[17px] text-white font-[600] rounded-[8px] border-2 border-gray-200"><img src="/images/cart.png" alt="" class="w-[25px] mr-[15px]">Orders</button>
+                            <button class="flex mt-[20px] px-[20px] w-[100%] py-[7px] bg-green-500 text-[17px] text-white font-[600] rounded-[8px] border-2 border-gray-200"><img src="/images/logout.png" alt="" class="w-[25px] mr-[15px]">Logout</button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+
+    
+    {% endblock %}

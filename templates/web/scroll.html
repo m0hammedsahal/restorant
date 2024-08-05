@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hide Scrollbar Example</title>
+  <link href="/path/to/your/tailwind.css" rel="stylesheet">
+</head>
+<body>
+  <div class="w-64 h-2 overflow-scroll hide-scrollbar bg-gray-200">
+    <!-- Your scrollable content here -->
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+  </div>
+
+  <script>
+        // tailwind.config.js
+
+    module.exports = {
+    theme: {
+        extend: {},
+    },
+    variants: {},
+    plugins: [
+        function ({ addUtilities }) {
+        addUtilities({
+            '.hide-scrollbar': {
+            /* Hide scrollbar for IE, Edge, and Firefox */
+            '-ms-overflow-style': 'none',  /* IE and Edge */
+            'scrollbar-width': 'none',  /* Firefox */
+            
+            /* Hide scrollbar for Chrome, Safari, and Opera */
+            '&::-webkit-scrollbar': {
+                display: 'none',
+            },
+            },
+        });
+        },
+    ],
+    };
+
+  </script>
+</body>
+</html>
