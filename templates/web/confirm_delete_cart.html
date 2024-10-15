@@ -1,0 +1,27 @@
+{% extends 'base/web-base.html' %}
+{% block container %}
+{% load static %}
+
+<section id="home" class="py-4">
+    <header class="flex justify-between items-center px-4 py-2 bg-gray-100 shadow-md">
+        <a href="{% url 'web:cart' %}" class="text-gray-600 hover:text-gray-800">
+            <img class="w-5" src="{% static 'web/images/arrow.png' %}" alt="Back">
+        </a>
+        <h1 class="text-xl font-bold text-gray-600">Confirm Action</h1>
+        <div class="w-5"></div>
+    </header>
+
+    <section class="container mx-auto px-4 py-6">
+        <div class="bg-white rounded-lg shadow-md max-w-2xl mx-auto p-6 text-center">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">You already have items from a different store in your cart.</h3>
+            <p class="text-gray-600 mb-4">Adding this item will remove all existing items from the cart. Do you want to proceed?</p>
+            <form method="POST" action="{% url 'web:cart' %}">
+                {% csrf_token %}
+                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Yes, Proceed</button>
+                <a href="{% url 'web:cart' %}" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Cancel</a>
+            </form>
+        </div>
+    </section>
+</section>
+
+{% endblock %}

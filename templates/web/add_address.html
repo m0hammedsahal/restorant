@@ -1,0 +1,85 @@
+{% extends 'base/web-base.html' %}
+{% load static %}
+{% block container %}
+
+<section id="home" class="">
+    <header class="px-[3%] h-[70px] grid grid-cols-3 items-center">
+        <a class="block col-span-1" href="{% url 'web:address' %}"><img class="w-[25px]" src="{% static 'web/images/arrow.png' %}" alt="Back"></a>
+        <h1 class="text-[25px] text-gray-600 font-[700] ml-[40%] col-span-1 text-start">{% if is_edit %} EDIT ADDRESS {% else %} ADDRESS {% endif %}</h1>
+    </header>
+
+    <section class="mt-10 max-w-lg mx-auto p-4">
+        <form method="POST" action="" class="space-y-4" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <div>
+                <label for="address" class="block text-gray-600 font-semibold">Address</label>
+                <input type="text" value="{{address_details.address}}" id="address" name="address" class="w-full p-3 rounded-2xl border-2 outline-none border-gray-200 mt-2" required placeholder="123 Main St, City, State, Zip Code">
+            </div>
+            <div>
+                <label for="apartment" class="block text-gray-600 font-semibold">Apartment</label>
+                <input type="text" value="{{address_details.apartment}}" id="apartment" name="apartment" class="w-full p-3 rounded-2xl border-2 outline-none border-gray-200 mt-2" required placeholder="Apt, Suite, etc. (optional)">
+            </div>
+            <div>
+                <label for="landmark" class="block text-gray-600 font-semibold">Landmark</label>
+                <input type="text" value="{{address_details.landmark}}" id="landmark" name="landmark" class="w-full p-3 rounded-2xl border-2 outline-none border-gray-200 mt-2" required placeholder="Nearby landmark (optional)">
+            </div>
+            <div>
+                <label for="pin_code" class="block text-gray-600 font-semibold">Pin Code</label>
+                <input type="text" value="{{address_details.pin_code}}" id="pin_code" name="pin_code" class="w-full p-3 rounded-2xl border-2 outline-none border-gray-200 mt-2" required placeholder="Pin Code" pattern="\d{6}" inputmode="numeric" maxlength="6">
+            </div>
+            <div>
+                <label for="mobile_no" class="block text-gray-600 font-semibold">Mobile No</label>
+                <input type="tel" value="{{address_details.mobile_no}}" id="mobile_no" name="mobile_no" class="w-full p-3 rounded-2xl border-2 outline-none border-gray-200 mt-2" placeholder="Mobile Number">
+            </div>
+            
+            <div class="flex justify-between mt-6">
+                <button type="button" id="home-btn" class="w-1/3 p-3 rounded-2xl bg-gray-200 text-gray-600 font-semibold" onclick="selectButton('home')">Home</button>
+                <button type="button" id="work-btn" class="w-1/3 p-3 rounded-2xl bg-gray-200 text-gray-600 font-semibold" onclick="selectButton('work')">Work</button>
+                <button type="button" id="other-btn" class="w-1/3 p-3 rounded-2xl bg-gray-200 text-gray-600 font-semibold" onclick="selectButton('other')">Other</button>
+            </div>
+                
+            <!-- Hidden input to store selected value -->
+            <input type="hidden" id="selected_address_type" name="address_type" value="{{address_details.address_type}}">
+
+            <button type="submit" class="w-full p-3 rounded-2xl bg-red-500 hover:bg-red-600 transition duration-300 text-white font-semibold mt-4">{% if is_edit %} EDIT ADDRESS {% else %} Save Address {% endif %}</button>
+        </form>
+    </section>
+</section>
+
+<script>
+function selectButton(type) {
+    // Reset all buttons to default state
+    document.getElementById('home-btn').classList.remove('bg-red-600', 'text-white');
+    document.getElementById('home-btn').classList.add('bg-gray-200', 'text-gray-600');
+    document.getElementById('work-btn').classList.remove('bg-red-600', 'text-white');
+    document.getElementById('work-btn').classList.add('bg-gray-200', 'text-gray-600');
+    document.getElementById('other-btn').classList.remove('bg-red-600', 'text-white');
+    document.getElementById('other-btn').classList.add('bg-gray-200', 'text-gray-600');
+    
+    // Set the selected button to active state
+    document.getElementById(type + '-btn').classList.remove('bg-gray-200', 'text-gray-600');
+    document.getElementById(type + '-btn').classList.add('bg-red-600', 'text-white');
+    
+    // Set the hidden input value to the selected type
+    document.getElementById('selected_address_type').value = type;
+}
+
+// Automatically select the button based on the initial address type value when the page loads
+window.onload = function() {
+    var initialType = document.getElementById('selected_address_type').value;
+    if (initialType) {
+        selectButton(initialType);
+    }
+}
+
+function validateForm() {
+    var addressType = document.getElementById('selected_address_type').value;
+    if (!addressType) {
+        alert("Please select an address type.");
+        return false; // Prevent form submission
+    }
+    return true; // Allow form submission
+}
+</script>
+
+{% endblock %}

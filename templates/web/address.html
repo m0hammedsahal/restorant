@@ -1,0 +1,55 @@
+{% extends 'base/web-base.html' %}
+{% load static %}
+{% block container %}
+
+<section id="home">
+    <section>
+        <header class="px-4 py-4 md:px-8 h-[70px] flex items-center justify-between">
+            <a class="block" href="{% url 'web:cart' %}">
+                <img class="w-[25px]" src="{% static 'web/images/arrow.png' %}" alt="Back">
+            </a>
+            <h1 class="text-[20px] md:text-[25px] text-gray-600 font-bold text-center flex-grow">
+                ADDRESS
+            </h1>
+            <div class="w-[25px]"></div> <!-- Placeholder to keep the title centered -->
+        </header>
+
+        <section class="spotlight max-w-[620px] mx-auto mt-[40px] px-4">
+            <a href="{% url 'web:add_address' %}" class="flex justify-center py-3 w-full text-center rounded-xl bg-red-500 hover:bg-red-600 transition duration-300 mb-6 text-[16px] font-semibold text-white">
+                ADD NEW ADDRESS
+            </a>
+            {% for address in addresses %}
+                <div class="add bg-gray-200 rounded-xl flex flex-col md:flex-row justify-between items-center p-6 mb-6 space-y-4 md:space-y-0">
+                    <a href="{% url 'web:set_address' id=address.id %}" class="flex items-center w-full md:w-auto">
+                        {% if address.address_type == "work" %}
+                            <img src="{% static 'web/images/work.png' %}" alt="Work Icon" class="w-[60px] md:w-[80px] rounded-full bg-white p-2 md:p-4 md:w-1/6">
+                        {% elif address.address_type == "home" %}
+                            <img src="{% static 'web/images/house.png' %}" alt="Home Icon" class="w-[60px] md:w-[80px] rounded-full bg-white p-2 md:p-4 md:w-1/6">
+                        {% else %}
+                            <img src="{% static 'web/images/house.png' %}" alt="Other Icon" class="w-[60px] md:w-[80px] rounded-full bg-white p-2 md:p-4 md:w-1/6">
+                        {% endif %}
+                    </a>
+                    <div class="mid block text-center md:text-left flex-grow md:ml-6 md:w-3/5">
+                        <a href="{% url 'web:edit_address' id=address.id %}" class="block">
+                            <h3 class="text-[16px] md:text-[17px] text-gray-600 font-semibold mb-2">{{ address.address_type }}</h3>
+                            <p class="text-[14px] md:text-[15px] text-gray-600">{{ address.address }}, {{ address.landmark }}, {{ address.pin_code }}, {{ address.address_type }} Address</p>
+                        </a>
+                    </div>
+                    <div class="right flex space-x-4 mt-2 md:mt-0 md:w-1/6 md:justify-end">
+                        <a href="{% url 'web:set_address' id=address.id %}">
+                            <img class="w-[20px] md:w-[25px]" src="{% static 'web/images/checkmark.png' %}" alt="Select">
+                        </a>
+                        <a href="{% url 'web:edit_address' id=address.id %}">
+                            <img class="w-[18px] md:w-[20px]" src="{% static 'web/images/edit.png' %}" alt="Edit">
+                        </a>
+                        <a href="{% url 'web:delete_address' id=address.id %}">
+                            <img class="w-[18px] md:w-[20px]" src="{% static 'web/images/delet.png' %}" alt="Delete">
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    </section>
+</section>
+
+{% endblock %}

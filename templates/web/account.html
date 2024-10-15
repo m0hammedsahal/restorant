@@ -1,69 +1,98 @@
-{% extends 'base/web-base.html' %} 
-{% load static %} 
+{% extends 'base/web-base.html' %}
+{% load static %}
 {% block container %}
 
+<section id="order-confirmation" class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="px-4 py-4 md:px-8 h-[70px] flex items-center justify-between">
+        <a class="block" href="{% url 'web:cart' %}">
+            <img class="w-[25px]" src="{% static 'web/images/arrow.png' %}" alt="Back">
+        </a>
+        <h1 class="text-[20px] md:text-[25px] text-gray-600 font-bold text-center flex-grow">
+            Account
+        </h1>
+        <div class="w-[25px]"></div> <!-- Placeholder to keep the title centered -->
+    </header>
 
-    <section id="home">
-        <section class="">
-            <header class="px-[3%] h-[70px] flex justify-between pr-[45%] items-center">
-                    <img class="w-[25px]" src="/images/arrow.png" alt="">
-                    <h1 class="text-[25px] text-gray-600 font-[700] mb-[px]">ACCOUNT</h1>
-            </header>
-            <section class="spotlight px-[3%] max-w-[620px] m-auto mt-[40px]">
-                
-                <div class="right">
-                    <h3 class="text-[18px] text-gray-600 font-[700] mb-[20px]">Recent Orders</h3>
-                    <div class="card p-[20px] rounded-2xl border-2 border-gray-200">
-                        <div class="flex items-center">
-                            <img class="w-[70px] mr-[20px] rounded-[7px]" src="/images/rest1.png" alt="">
-                            <ul class="">
-                                <li class="text-[15px] text-gray-700 font-[700] mb-[10px] mt-[5px]">AL Fahal Full</li>
-                                <li class="text-[15px] text-gray-700 font-[700] mb-[5px]">₹ 330 | 2 Item</li>
-                            </ul>
-                            <p class="text-[15px] text-gray-700 font-[700] ml-[100px] border-b-2 border-gray-700 mb-[40px]">#164</p>
-                        </div>
-                        <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
-                        <div class="flex justify-between items-center">
-                            <button class="flex mt-[px] px-[20px] w-[160px] py-[7px] bg-green-500 text-[17px] text-white font-[600] rounded-[8px] border-2 border-gray-200">TRACK ORDER</button>
-                            <p class="text-[16px] font-[700] text-red-600">Preparing</p>
-                        </div>
-                    </div>
-                    
-                    <div class="card p-[20px] rounded-2xl border-2 border-gray-200 mt-[20px]">
-                        <div class="flex items-center">
-                            <img class="w-[70px] mr-[20px] rounded-[7px]" src="/images/rest1.png" alt="">
-                            <ul class="">
-                                <li class="text-[15px] text-gray-700 font-[700] mb-[10px] mt-[5px]">AL Fahal Full</li>
-                                <li class="text-[15px] text-gray-700 font-[700] mb-[5px]">₹ 330 | 2 Item</li>
-                            </ul>
-                            <p class="text-[15px] text-gray-700 font-[700] ml-[100px] border-b-2 border-gray-700 mb-[40px]">#164</p>
-                        </div>
-                        <div class="border-b-[1px] border-gray-300 mb-[10px] mt-[10px]"></div>
-                        <div class="flex justify-between items-center">
-                            <button class="flex mt-[px] px-[20px] w-[160px] py-[7px] bg-green-500 text-[17px] text-white font-[600] rounded-[8px] border-2 border-gray-200">TRACK ORDER</button>
-                            <p class="text-[16px] font-[700] text-red-600">Preparing</p>
-                        </div>
-                    </div>
-                    <div class="left mr-[40px] mt-[20px]">
-                        <div class="top flex p-[20px] rounded-2xl border-2 border-gray-200">
-                            <img src="/images/man.png" alt="" class="w-[90px]">
-                            <ul class="ml-[20px]">
-                                <li class="text-[15px] text-gray-700 font-[600] mb-[5px]">MOHAMMED adil</li>
-                                <li class="text-[16px] text-gray-700 font-[600] mb-[5px]">+91 9766827885</li>
-                                <li class="text-[16px] text-gray-700 font-[600] mb-[px]">Jamal@tegfly.in</li>
-                            </ul> 
-                        </div>
-                        <div class="px-[5%]">
-                            <button class="flex mt-[20px] px-[20px] w-[100%] py-[7px] bg-green-500 text-[17px] text-white font-[600] rounded-[8px] border-2 border-gray-200"><img src="/images/address.png" alt="" class="w-[25px] mr-[15px]">Manage Addresses</button>
-                            <button class="flex mt-[20px] px-[20px] w-[100%] py-[7px] bg-green-500 text-[17px] text-white font-[600] rounded-[8px] border-2 border-gray-200"><img src="/images/cart.png" alt="" class="w-[25px] mr-[15px]">Orders</button>
-                            <button class="flex mt-[20px] px-[20px] w-[100%] py-[7px] bg-green-500 text-[17px] text-white font-[600] rounded-[8px] border-2 border-gray-200"><img src="/images/logout.png" alt="" class="w-[25px] mr-[15px]">Logout</button>
-                            
-                        </div>
+    <!-- Main Content -->
+    <section class="max-w-4xl mx-auto mt-6 p-4">
+        <!-- Recent Orders -->
+        <div class="mb-8">
+            <!-- Account Details -->
+            <div class="bg-white shadow rounded-lg p-6 mb-5">
+                <div class="flex items-center mb-4">
+                    <img class="w-20 h-20 rounded-full mr-4" src="{% static 'web/images/man.png' %}" alt="Profile Picture">
+                    <div>
+                        <p class="text-gray-700 font-semibold">{{ user.first_name }} {{ user.last_name }}</p>
+                        <p class="text-gray-600">{{ selected_address.mobile_no }}</p>
+                        <p class="text-gray-600">{{ user.email }}</p>
                     </div>
                 </div>
-            </section>
-        </section>
-    </section>
+                <div class="space-y-4">
+                    <a href="{% url 'web:address' %}" class="w-full flex items-center justify-center bg-green-500 text-white font-semibold py-2 rounded-lg shadow">
+                        <img src="{% static 'web/images/address.png' %}" alt="Address" class="w-6 mr-2"> Manage Addresses
+                    </a>
+                    <a href="{% url 'web:orders' %}" class="w-full flex items-center justify-center bg-green-500 text-white font-semibold py-2 rounded-lg shadow">
+                        <img src="{% static 'web/images/cart.png' %}" alt="Orders" class="w-6 mr-2"> Orders
+                    </a>
+                    <a href="{% url 'web:logout' %}" class="w-full flex items-center justify-center bg-green-500 text-white font-semibold py-2 rounded-lg shadow">
+                        <img src="{% static 'web/images/logout.png' %}" alt="Logout" class="w-6 mr-2"> Logout
+                    </a>
+                </div>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Recent Orders</h3>
 
-    
-    {% endblock %}
+            
+        </div>
+        {% for order in orders %}
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+            <!-- Order Header -->
+            <div class="flex items-center justify-between mb-4">
+                <!-- Order Image (optional) -->
+                <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mr-4">
+                    <img src="{% static 'web/images/shopping-cart-check-mark-icon-600nw-1708233319.webp' %}" alt="Order Image" class="w-10 h-10 rounded-full">
+                </div>
+                <!-- Order Details -->
+                <div class="flex-1">
+                    <p class="text-lg font-semibold text-gray-700">Order ID: #{{ order.id }}</p>
+                    <p class="text-gray-600">Status: {{ order.order_status }}</p>
+                    <p class="text-gray-600">Total: ₹{{ order.total }}</p>
+                </div>
+            </div>
+
+            <!-- Order Items -->
+            <div class="border-t border-gray-200 pt-4">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Items</h3>
+                <ul>
+                    {% for item in order.order_item.all %}
+                    <li class="mb-4 flex items-center">
+                        <!-- Item Image -->
+                        <div class="w-16 h-16 bg-gray-200 rounded-lg overflow-hidden mr-4">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Item Details -->
+                        <div>
+                            <p class="text-gray-700 font-semibold">{{ item.product.name }}</p>
+                            <p class="text-gray-600">₹{{ item.product.price }} x {{ item.quantity }} = ₹{{ item.amount }}</p>
+                        </div>
+                    </li>
+                    {% empty %}
+                    <li>No items in this order.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="flex justify-between items-center">
+                <a href="{% url 'web:order_tracking' order.id %}">
+                    <button class="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg shadow">Track Order</button>
+                </a>
+                <p class="text-red-600 font-semibold">{{ order.order_status }}</p>
+            </div>
+            
+        </div>
+        {% endfor %}
+
+        
+    </section>
+</section>
+
+{% endblock %}

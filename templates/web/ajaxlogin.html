@@ -1,0 +1,100 @@
+{% extends 'base/web-base.html' %}
+{% block container %}
+{% load static %}
+
+
+<section class="grid grid-cols-1 md:grid-cols-2 h-screen">
+    <div class="col-span-1 hidden md:flex">
+        <img src="{% static 'web/images/rest2.png' %}" alt="image" class="w-full">
+    </div>
+    <div class="col-span-1 h-screen flex justify-center items-center">
+        <div class="text-center">
+            <h1 class="text-[32px] font-semibold mb-5">LOGIN NOW</h1>
+            <p class="w-[90%] md:w-[70%] m-auto mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel soluta, quidem reiciendis necessitatibus unde culpa?</p>
+            <form action="" id="login-form" method="post" class="w-[90%] md:w-[70%] m-auto">
+                {% csrf_token %}   
+                <div class="flex items-center justify-between border border-gray-300 mb-4 rounded-2xl">
+                    <input 
+                        type="text" 
+                        name="email" 
+                        id="email" 
+                        placeholder="Enter Your Email" 
+                        class="flex-grow w-full px-4 py-3 rounded-2xl outline-none"
+                    >
+                    <span id="email-feedback" class="mx-2 text-2xl flex items-center space-x-5 ">
+                        <!-- Feedback messages with icons will be dynamically inserted here -->
+                    </span>
+                </div>
+                
+                <input type="password" name="password" placeholder="Enter Your Password" class="w-full outline-none border rounded-2xl py-3 px-5 mb-5">
+                <button type="submit" class="py-3 px-5 bg-red-500 text-white text-[14px] font-semibold rounded-xl">LOGIN</button>
+            </form>
+            <p class="text-[14px] mt-5">Don't have an Account? <a href="{% url 'web:register' %}" class="text-[14px] text-red-500">Sign Up</a></p>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+        $("#email").on("input", function(){
+            var email = $(this).val();
+            if (email.length > 0) {
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'web:validate_email' %}",
+                    data: {
+                        'email': email
+                    },
+                    success: function(response){
+                        var feedbackSpan = $("#email-feedback");
+                        if (response.is_valid) {
+                            feedbackSpan.html("<i class='bx bxs-check-circle'></i>").removeClass("text-red-600").addClass("text-green-600 animated bounceInDown");
+                        } else {
+                            feedbackSpan.html("<i class='bx bx-x-circle'></i>").removeClass("text-green-600").addClass("text-red-600");
+                        }
+                        // Trigger the animation
+                        
+                    },
+                    error: function(){
+                        $("#email-feedback").text("Error occurred. Please try again later.").addClass("text-red-600");
+                    }
+                });
+            } else {
+                $("#email-feedback").text("");
+            }
+        });
+    });
+    </script>
+    <style>
+        @keyframes bounceInDown {
+            0%, 60%, 75%, 90%, 100% {
+                animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            }
+            0% {
+                opacity: 0;
+                transform: translateY(-3000px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(25px);
+            }
+            75% {
+                transform: translateY(-10px);
+            }
+            90% {
+                transform: translateY(5px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .animate__bounceInDown {
+            animation-name: bounceInDown;
+            animation-duration: 1s;
+            animation-fill-mode: both;
+        }
+
+    </style>
+    
+
+{% endblock %}

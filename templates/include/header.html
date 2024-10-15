@@ -1,76 +1,80 @@
+
 {% load static %}
 
-<header class="h-[80px] shadow-md">
-    <section class="wrapper h-full flex justify-between items-center">
-      <div class="l">
-        <h1 class="r">
-          <a href="index.html" class="t"
-            ><img
-              src="{% static 'web./images/logo.png' %}"
-              alt="logo"
-              class="w-[90px]"
-          /></a>
-        </h1>
-      </div>
-      <div class="hidden md:block ml-[22%]">
-        <ul class="flex justify-center">
-          <li class="mr-7">
-            <a href="/" class="flex justify-normal items-center text-[18px]"
-              ><img
-                src="{% static 'web./images/home.png' %}"
-                alt="home"
-                class="w-[18px] mr-2"
-              />Home</a
-            >
-          </li>
-          <li class="mr-7">
-            <a href="#" class="flex justify-normal items-center text-[18px]"
-              ><img
-                src="{% static 'web./images/search.png' %}"
-                alt="Search"
-                class="w-[18px] mr-2"
-              />Search</a
-            >
-          </li>
-          <li class="mr-7">
-            <a
-              href="{% url 'web:cart' %}"
-              class="flex justify-normal items-center text-[18px]"
-              ><img
-                src="{% static 'web./images/bag.png' %}"
-                alt="Cart"
-                class="w-[18px] mr-2"
-              />Cart</a
-            >
-          </li>
-          <li class="mr-7">
-            <a
-              href="{% url 'web:login' %}"
-              class="flex justify-normal items-center text-[18px]"
-              ><img
-                src="{% static 'web./images/user.png' %}"
-                alt="Account"
-                class="w-[18px] mr-2"
-              />Account</a
-            >
-          </li>
-        </ul>
-      </div>
-      <div class="flex justify-end items-center ml-[7%]">
-        <img
-          src="{% static 'web./images/map.png' %}"
-          alt=""
-          class="w-[18px] mr-3"
-        />
-        <p
-          class="text-[18px] text-gray-500 pb-1 font-semibold border-b-2 border-yellow-400"
-        >
-          Tirur, Malappuram
-        </p>
-      </div>
-      <a href="{% url 'web:logout' %}" class="flex">
-        <i id="logout" class="fa-solid fa-right-from-bracket rotate-180"></i>
-        <p id="lo" class="font-bold"></p>
-      </a>
+<!-- Header Section -->
+<header class="h-[80px] shadow-md bg-white">
+    <section class="wrapper h-full flex justify-between items-center px-4">
+        <!-- Left Logo Section -->
+        <div class="l">
+            <h1 class="r">
+                <a href="/" class="t">
+                    <img src="{% static 'web./images/logo.png' %}" alt="logo" class="w-[90px]" />
+                </a>
+            </h1>
+        </div>
+
+        <!-- Middle Navigation Section and Search Bar -->
+        <div class="hidden md:flex ml-[22%] font-semibold text-gray-500" id="menuContainer">
+            <ul class="flex justify-center" id="menuItems">
+                <li class="mr-7">
+                    <a href="/" class="flex justify-normal items-center text-[18px] hover:text-gray-700 transition duration-300">
+                        <img src="{% static 'web./images/home.png' %}" alt="home" class="w-[18px] mr-2" />Home
+                    </a>
+                </li>
+                <li class="mr-7">
+                    <a id="searchBtn" class="cursor-pointer flex justify-normal items-center text-[18px] hover:text-gray-700 transition duration-300">
+                        <img src="{% static 'web./images/search.png' %}" alt="Search" class="w-[18px] mr-2" />Search
+                    </a>
+                </li>
+                <li class="mr-7">
+                    <a href="{% url 'web:cart' %}" class="flex justify-normal items-center text-[18px] hover:text-gray-700 transition duration-300">
+                        <img src="{% static 'web./images/bag.png' %}" alt="Cart" class="w-[18px] mr-2" />Cart
+                    </a>
+                </li>
+                <li class="mr-7">
+                    <a href="{% url 'web:account' %}" class="flex justify-normal items-center text-[18px] hover:text-gray-700 transition duration-300">
+                        <img src="{% static 'web./images/user.png' %}" alt="Account" class="w-[18px] mr-2" />Account
+                    </a>
+                </li>
+            </ul>
+            <!-- Search Bar Input (Initially Hidden) -->
+            <div id="searchBarContainer" class="hidden w-full flex justify-center items-center">
+                <input type="text" placeholder="Search for items..." class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-yellow-400" />
+                <button id="closeSearch" class="ml-2 text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Location and Logout Section -->
+        <div class="flex justify-end items-center ml-[7%]">
+            <img src="{% static 'web./images/map.png' %}" alt="" class="w-[18px] mr-3" />
+            <p class="text-[18px] text-gray-500 pb-1 font-semibold border-b-2 border-yellow-400">Tirur, Malappuram</p>
+        </div>
+        <a href="{% url 'web:logout' %}" class="flex items-center ml-5">
+            <i id="logout" class="fa-solid fa-right-from-bracket rotate-180 text-gray-500"></i>
+            <p id="lo" class="font-bold ml-2 text-gray-500">Logout</p>
+        </a>
     </section>
-  </header>
+</header>
+
+<!-- JavaScript for Toggle Functionality -->
+<script>
+    // Get the Search button, Menu items, and Search Bar container elements
+    const searchBtn = document.getElementById('searchBtn');
+    const menuItems = document.getElementById('menuItems');
+    const searchBarContainer = document.getElementById('searchBarContainer');
+    const closeSearch = document.getElementById('closeSearch');
+
+    // Toggle the visibility of the menu items and search bar
+    searchBtn.addEventListener('click', function () {
+        menuItems.classList.add('hidden'); // Hide menu items
+        searchBarContainer.classList.remove('hidden'); // Show search bar
+    });
+
+    // Close the search bar and show menu items again
+    closeSearch.addEventListener('click', function () {
+        searchBarContainer.classList.add('hidden'); // Hide search bar
+        menuItems.classList.remove('hidden'); // Show menu items
+    });
+</script>

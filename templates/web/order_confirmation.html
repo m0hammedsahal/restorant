@@ -1,0 +1,24 @@
+{% extends 'base/web-base.html' %}
+{% load static %}
+{% block container %}
+
+<section id="order-confirmation" class="max-w-[620px] mx-auto py-[40px] px-4">
+    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+        <img src="{% static 'web/images/checkmark.png' %}" alt="Order Confirmed" class="w-[80px] mx-auto mb-6">
+        <h1 class="text-[24px] text-green-600 font-bold mb-4">Order Confirmed!</h1>
+        <p class="text-[16px] text-gray-600 mb-6">Thank you for your order. Your order number is <strong>{{ order_id }}</strong>.</p>
+        <p class="text-[16px] text-gray-600 mb-6">You will receive a confirmation email shortly with the details of your order.</p>
+        <a href="{% url 'web:index' %}" class="block w-full py-3 mt-6 text-center bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition duration-300">Return to Home</a>
+    </div>
+</section>
+
+
+<script>
+    // Redirect to orders after a delay (e.g., 3 seconds)
+    setTimeout(function() {
+        window.location.href = "{% url 'web:orders' %}";
+    }, 3000);  // 5-second delay before logging out
+</script>
+
+
+{% endblock %}

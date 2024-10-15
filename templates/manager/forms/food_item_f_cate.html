@@ -1,0 +1,141 @@
+
+{% extends 'base/manager-base.html' %} 
+{% load static %} 
+{% block container %}
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        {% include 'include/manager-nav.html' %}
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                               
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Food Items File</h4>
+                                <div class="basic-form">
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="form-group cols-12 cols-md-6">
+                                            <label for="{{ form.name.id_for_label }}">Name</label>
+                                            {{ form.name }}
+                                            
+                                        </div>
+                                        <div class="form-group cols-12 cols-md-6">
+                                            <label for="{{ form.title.id_for_label }}">Title</label>
+                                            {{ form.title }}
+                                            
+                                        </div>
+                                        <div class="form-group cols-12 cols-md-6">
+                                            <label for="{{ form.image.id_for_label }}">Image</label>
+                                            {{ form.image }}
+                                            
+                                        </div>
+                                        <div class="form-group cols-12 cols-md-6">
+                                            <label for="{{ form.price.id_for_label }}">price</label>
+                                            {{ form.price }}
+                                            
+                                        </div>
+                                        <div class="form-group cols-12 cols-md-6">
+                                            <label for="{{ form.is_veg.id_for_label }}">is_veg</label>
+                                            {{ form.is_veg }}
+                                            
+                                        </div>
+
+                                        <div class="form-group cols-12 cols-md-6" style="display: flex;">
+                                            <label for="{{ form.restorant.id_for_label }}" style="margin-right: 10px;">Restorant:</label>
+                                            <option value="{{ restorantname.id }}">{{ restorantname }}</option>
+                                            <a href="{% url 'manager:restorant_list' %}" style="margin-left: 10px;">
+                                                <button style="background: #9d9a9a; color: azure; border-radius: 5px; padding: 2px; font-size: 10px; border: 1px solid gray;" type="button">
+                                                    Change Restorant
+                                                </button>
+                                            </a>
+                                        </div>
+                                        
+                                        <div class="form-group cols-12 cols-md-6" style="display: flex;">
+                                            <label for="{{ form.foodcategory.id_for_label }}" style="margin-right: 10px;">Food Category:</label>
+                                            <p>{{ foodcategoryname }}</p>
+                                            <a href="{% url 'manager:food_category_list' %}" style="margin-left: 10px;">
+                                                <button style="background: #9d9a9a; color: azure; border-radius: 5px; padding: 2px; font-size: 10px; border: 1px solid gray;" type="button">
+                                                    Change Food Category
+                                                </button>
+                                            </a>
+                                        </div>
+                                        
+                                        
+                                        
+                                        <button type="submit" class="btn btn-dark mb-2 mt-4">
+                                            {% if is_edit %} Save Changes {% else %} Add Food Item {% endif %}
+                                        </button>
+                                    </form>
+                                    {% if error %}
+                                        <p class="text-danger">{{ message }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#id_restorant').change(function() {
+                    var restorantId = $(this).val();
+                    var url = ""; // Replace with your actual URL for AJAX
+
+                    $.ajax({
+                        url: url,
+                        data: {
+                            'restorant': restorantId
+                        },
+                        success: function (data) {
+                            $("#id_foodcategory").html(data);
+                        }
+                    });
+                });
+            });
+        </script>
+
+        {% endblock %}

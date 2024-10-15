@@ -1,0 +1,114 @@
+
+{% extends 'base/manager-base.html' %} 
+{% load static %} 
+{% block container %}
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        {% include 'include/manager-nav.html' %}
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                               
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Restorant Input File</h4>
+                                <div class="basic-form">
+                                    <div class="basic-form">
+                                        <form method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="form-group cols-12 cols-md-6">
+                                                <label for="{{ form.name.id_for_label }}">Restorant name</label>
+                                                {{ form.name }}
+                                                
+                                            </div>
+                                            <div class="form-group cols-12 cols-md-6">
+                                                <label for="{{ form.discription.id_for_label }}">Restorant discription</label>
+                                                {{ form.discription }}
+                                                
+                                            </div>
+                                            <div class="form-group cols-12 cols-md-6">
+                                                <label for="{{ form.image.id_for_label }}">Restorant Image</label>
+                                                {{ form.image }}
+                                               
+                                            </div>
+                                            <div class="form-group cols-12 cols-md-6">
+                                                <label for="{{ form.rating.id_for_label }}">Restorant Rating</label>
+                                                {{ form.rating }}
+                                                
+                                            </div>
+                                            <div class="form-group cols-12 cols-md-6">
+                                                <label for="{{ form.time.id_for_label }}">Restorant Time</label>
+                                                {{ form.time }}
+                                                
+                                            </div>
+                                            <div class="form-group cols-12 cols-md-6">
+                                                <label for="{{ form.discount.id_for_label }}">Restorant Discount</label>
+                                                {{ form.discount }}
+                                                
+                                            </div>
+                                            
+                                            <div class="form-group cols-12 cols-md-6">
+                                                <label for="{{ form.category.id_for_label }}">Restorant Category</label>
+                                                {{ form.category }}
+                                                
+                                            </div>
+                                            <button type="submit" class="btn btn-dark mb-2">
+                                                {% if is_edit %} Save Changes {% else %} Add Restorant {% endif %}
+                                            </button>
+                                        </form>
+                                        {% if error %}
+                                            <p class="text-danger">{{ message }}</p> 
+                                        {% endif %}
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        {% endblock %}

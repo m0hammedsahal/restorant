@@ -1,85 +1,109 @@
-{% extends 'base/web-base.html' %} 
-{% load static %} 
+{% extends 'base/web-base.html' %}
+{% load static %}
 {% block container %}
 {% include 'include/header.html' %}
-
+{% load custom_filters %}
 <section class="wrapper py-10">
   <section class="swiper mySwiper">
     <div class="swiper-wrapper">
       {% for slide in slides %}
-      <a href="{% url 'web:singlerest' id=slide.id %}" class="swiper-slide block">
+      <a href="{% url 'web:singlerest' id=slide.restorant.id %}" class="swiper-slide block relative">
         <img
           src="{{ slide.image.url }}"
           alt=""
-          class="w-full rounded-2xl"
+          class="w-full h-[500px] rounded-xl"
         />
+        <div class="absolute inset-0 rounded-2xl"></div>
+        <div class="absolute inset-0 flex justify-center items-center">
+          <h2 class="text-white text-3xl font-bold">{{ slide.title }}</h2>
+        </div>
       </a> 
       {% endfor %}
     </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next custom-swiper-button"></div>
+    <div class="swiper-button-prev custom-swiper-button"></div>
   </section>
 </section>
-<section>
-  <section class="wrapper">
-    <h1 class="text-[24px] font-semibold pb-5">Whath's on your mind?</h1>
-    <a href="">
-      <div class="scroll-bar flex justify-between overflow-x-scroll items-center">
-        {% for restorant_category in restorant_categorys %}
-        <div class="min-w-[30%] max-w-[25%] sm:min-w-[20%] sm:max-w-[20%] md:min-w-[15%] md:max-w-[15%]">
-          <a href="{% url 'web:restorant' id=restorant_category.id %}">
-            <img src="{{ restorant_category.image.url }}" alt="image" />
-          </a>
-          <h1 class="text-center">{{ restorant_category.name }}</h1>
-        </div>
+
+<section id="tranding">
+  <div class="container">
+  </div>
+  <div class="container">
+    <p class="text-[21px] text-gray-600 font-[700] pb-[35px] pt-[35px] absolute">Filter by Category</p>
+    <div class="swiper tranding-slider">
+      <div class="swiper-wrapper">
+        <!-- Slide-start -->
+        {% for category in restorant_categorys %}
+        <a href="{% url 'web:restorant' id=category.id %}" class="swiper-slide tranding-slide">
+          <div class="tranding-slide-img">
+            <img src="{{ category.image.url }}" alt="Tranding">
+          </div>
+          <div class="tranding-slide-content">
+            <div class="tranding-slide-content-bottom">
+              <h2 class="food-name">{{ category.name }}</h2>
+            </div>
+          </div>
+        </a>
+        <!-- Slide-end -->
         {% endfor %}
-        <!-- <input type="text" /> -->
       </div>
-    </a>
-  </section>
+
+      <!-- Add Slider Controls -->
+      <div class="tranding-slider-control">
+        <div class="swiper-button-prev slider-arrow">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </div>
+        <div class="swiper-button-next slider-arrow">
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </div>
 </section>
+
 <section class="py-10">
-  <section class="wrapper">
-    <h1 class="text-[24px] font-semibold pb-5">Top Restorants!</h1>
+  <section class="wrapper text-gray-500">
+    <h1 class="text-[28px] font-bold pb-5">Top Restaurants!</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
       {% for restorant in restorants %}
-      <div class="col-span-1 p-4 rounded-lg border flex justify-start">
-        <a href="{% url 'web:singlerest' id=restorant.id %}" class="flex justify-start">
-          <img
-            class="w-[35%] mr-4 rounded-xl"
-            src="{{restorant.image.url}}"
-            alt="image"
-          />
+      <div class="col-span-1 p-5 rounded-lg border flex justify-start hover:bg-gray-100 transition-transform duration-300 transform hover:scale-105">
+        <a href="{% url 'web:singlerest' id=restorant.id %}" class="flex justify-start w-full">
+          <img class="w-[35%] mr-4 rounded-xl" src="{{ restorant.image.url }}" alt="image" />
           <div class="w-[65%]">
-            <h3 class="text-[16px] font-semibold mb-1">{{restorant.name}}</h3>
-            <p class="text-[12px] font-[] mb-4">{{restorant.discription}}</p>
-            <div class="flex justify-start items-center">
-              <span
-                class="flex justify-start items-center text-[14px] font-[600] mr-4"
-              >
-                <img
-                  class="w-[16px] mr-2"
-                  src="{{restorant.name}}"
-                  alt=""
-                />
-                {{restorant.rating}}
+            <h3 class="text-[18px] font-semibold mb-2">{{ restorant.name }}</h3>
+            <p class="text-[14px] mb-4">{{ restorant.description }}</p>
+            <div class="flex justify-start items-center mb-2">
+              <span class="flex items-center text-[14px] font-[600] mr-4">
+                <img class="w-[16px] mr-2" src="{% static 'web/images/star.png' %}" alt="rating" />
+                
+
+                {% for i in star_range %}
+                    {% if restorant.rating >= i %}
+                        <!-- Full star -->
+                        <i class='bx bxs-star text-yellow-400 text-xl'></i>
+                    {% elif restorant.rating >= i|subtract:0.5 %}
+                        <!-- Half star -->
+                        <i class='bx bxs-star-half text-yellow-400 text-xl'></i>
+                    {% else %}
+                        <!-- Empty star -->
+                        <i class='bx bx-star text-yellow-400 text-xl'></i>
+                    {% endif %}
+                {% endfor %}
+                
+
+
+                {{ restorant.rating }}
               </span>
-              <span
-                class="flex justify-start items-center text-[14px] font-[600]"
-              >
-                <img
-                  class="w-[16px] h-[16px] mr-2"
-                  src="{% static 'web/images/clock.png' %}"
-                  alt=""
-                />
-                {{restorant.time}}
+              <span class="flex items-center text-[14px] font-[600]">
+                <img class="w-[16px] h-[16px] mr-2" src="{% static 'web/images/clock.png' %}" alt="time" />
+                {{ restorant.time }}
               </span>
             </div>
             <h6 class="text-red-500 text-[12px] font-bold flex mt-[5px]">
-              <img
-                class="w-[16px] h-[16px] mr-2 mt-[]"
-                src="{% static 'web/images/discount.png' %}"
-                alt=""
-              />
-              **UPTO {{restorant.discount}}% DISCOUNT
+              <img class="w-[16px] h-[16px] mr-2" src="{% static 'web/images/discount.png' %}" alt="discount" />
+              **UPTO {{ restorant.discount }}% DISCOUNT
             </h6>
           </div>
         </a>
@@ -92,33 +116,27 @@
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
 <!-- Initialize Swiper -->
 <script>
-  let logout = document.getElementById("logout");
-  let log = document.getElementById("log");
-
-  logout.addEventListener("mouseenter", function () {
-    log.innerText = "logout";
-    logout.style.display = "none";
-  });
-
   var swiper = new Swiper(".mySwiper", {
     spaceBetween: 30,
     centeredSlides: true,
     autoplay: {
-      delay: 2500,
+      delay: 3000,
       disableOnInteraction: false,
     },
+    loop: true,
+    slidesPerView: 1,
     breakpoints: {
-      // when window width is <= 499px
-      499: {
-        slidesPerView: 1,
-        spaceBetweenSlides: 50,
+      640: {
+        slidesPerView: 2,
       },
-      // when window width is <= 999px
-      999: {
+      1024: {
         slidesPerView: 3,
-        spaceBetweenSlides: 50,
       },
     },
     pagination: {
@@ -130,21 +148,320 @@
       prevEl: ".swiper-button-prev",
     },
   });
+
+
+  var TrandingSlider = new Swiper('.tranding-slider', {
+  effect: 'coverflow',
+  grabCursor: true,
+  centeredSlides: true,
+  loop: true,
+  slidesPerView: 'auto',
+  coverflowEffect: {
+    rotate: 0,
+    stretch: 0,
+    depth: 100,
+    modifier: 2.5,
+    slideShadows: false, /* Disable shadows for a clean look */
+  },
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+  },
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  }
+});
+
 </script>
+
 <style>
-  /* Add this CSS to your stylesheet */
-  .hover-text-change:hover .link-text::before {
-    content: "Account";
+  .custom-swiper-button {
+    color: #ff5a5f; /* Custom color */
+    width: 30px; /* Smaller width */
+    height: 30px; /* Smaller height */
+    border-radius: 50%; /* Rounded buttons */
+    background-color: rgba(0, 0, 0, 0.3); /* Slightly transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .custom-swiper-button:hover {
+    background-color: #ff5a5f; /* Change background on hover */
+    color: #ffffff; /* Change icon color on hover */
   }
 
-  .hover-text-change:hover .link-text {
-    visibility: hidden;
+  .custom-swiper-button::after {
+    font-size: 16px; /* Smaller icon */
   }
 
-  .hover-text-change:hover .link-text::before {
-    visibility: visible;
-    display: inline-block;
+  /* Adjust button position if needed */
+  .swiper-button-next {
+    right: 10px; /* Adjust position */
   }
+
+  .swiper-button-prev {
+    left: 10px; /* Adjust position */
+  }
+
+  .swiper-pagination {
+    top: 198px !important; /* Move the pagination slightly down */
+  }
+
+  .swiper-slide img {
+    width: 100%;
+    height: 200px; /* Set a fixed height for the images */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 20px; /* Same border-radius as the container */
+    margin-bottom: 20px;
+  }
+
+
+
+
+
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+:root {
+  --primary: #ec994b;
+  --white: #ffffff;
+  --bg: #ffff;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "Montserrat", sans-serif;
+  scroll-behavior: smooth;
+}
+
+@media (min-width: 1440px) {
+  html {
+    zoom: 1.5;
+  }
+}
+
+@media (min-width: 2560px) {
+  html {
+    zoom: 1.7;
+  }
+}
+
+@media (min-width: 3860px) {
+  html {
+    zoom: 2.5;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 1.3rem;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background: #797979;
+  transition: all 0.5s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #222224;
+}
+
+::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+
+body {
+  font-size: 1.6rem;
+  background: var(--bg);
+}
+
+.container {
+  max-width: 124rem;
+  padding: 0 1rem;
+  margin: 0 auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.section-heading {
+  font-size: 3rem;
+  color: var(--primary);
+  padding: 2rem 0;
+}
+
+#tranding {
+  padding: 4rem 0;
+}
+
+@media (max-width: 1440px) {
+  #tranding {
+    padding: 7rem 0;
+  }
+}
+
+#tranding .tranding-slider {
+  height: 37rem; /* Reduced height */
+  padding: 2rem 0;
+  position: relative;
+}
+
+@media (max-width: 500px) {
+  #tranding .tranding-slider {
+    height: 35rem;
+  }
+}
+
+.tranding-slide {
+  width: 23rem;
+  height: 23rem; /* Decreased height */
+  position: relative;
+  border-radius: 50%; /* Makes the slide rounded */
+  overflow: hidden; /* Ensure rounded corners are visible */
+  background: var(--white); /* Optional background for contrast */
+}
+
+@media (max-width: 500px) {
+  .tranding-slide {
+    width: 28rem !important;
+    height: 30rem !important; /* Reduced height for smaller screens */
+  }
+  .tranding-slide .tranding-slide-img img {
+    width: 28rem !important;
+    height: 30rem !important;
+  }
+}
+
+.tranding-slide .tranding-slide-img img {
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  border-radius: 3rem; /* Make the image rounded */
+  object-fit: cover; /* Maintain aspect ratio */
+}
+
+.tranding-slide .tranding-slide-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 3rem; /* Rounded corners for content */
+  overflow: hidden; /* Ensure rounded corners for content */
+}
+
+.tranding-slide-content .food-price {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  color: #333; /* Darker text color */
+}
+
+.tranding-slide-content .tranding-slide-content-bottom {
+  position: absolute;
+  bottom: 2rem;
+  left: 9rem;
+  color: #222; /* Darker text color */
+}
+
+.food-name {
+  font-weight: 700;
+  color: #222; /* Darker text color */
+}
+
+.tranding-slider-control {
+  position: relative;
+  bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tranding-slider-control .swiper-button-next {
+  left: 58% !important;
+  transform: translateX(-58%) !important;
+}
+
+@media (max-width: 990px) {
+  .tranding-slider-control .swiper-button-next {
+    left: 70% !important;
+    transform: translateX(-70%) !important;
+  }
+}
+
+@media (max-width: 450px) {
+  .tranding-slider-control .swiper-button-next {
+    left: 80% !important;
+    transform: translateX(-80%) !important;
+  }
+}
+
+@media (max-width: 990px) {
+  .tranding-slider-control .swiper-button-prev {
+    left: 30% !important;
+    transform: translateX(-30%) !important;
+  }
+}
+
+@media (max-width: 450px) {
+  .tranding-slider-control .swiper-button-prev {
+    left: 20% !important;
+    transform: translateX(-20%) !important;
+  }
+}
+
+.tranding-slider-control .slider-arrow {
+  background: var(--white);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  left: 42%;
+  transform: translateX(-42%);
+  filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
+}
+
+.tranding-slider-control .slider-arrow ion-icon {
+  font-size: 2rem;
+  color: #222224;
+}
+
+.tranding-slider-control .slider-arrow::after {
+  content: '';
+}
+
+.tranding-slider-control .swiper-pagination {
+  position: relative;
+  width: 15rem;
+  bottom: 1rem;
+}
+
+.tranding-slider-control .swiper-pagination .swiper-pagination-bullet {
+  filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
+}
+
+.tranding-slider-control .swiper-pagination .swiper-pagination-bullet-active {
+  background: var(--primary);
+}
+
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+  display: none;
+}
+
 </style>
+
+
 
 {% endblock %}

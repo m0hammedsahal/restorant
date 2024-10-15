@@ -6,6 +6,8 @@
 
 
 from pathlib import Path
+import os
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,6 +32,7 @@ INSTALLED_APPS = [
     'web',
     'customer',
     'main',
+    'manager',
 
 ]
 
@@ -48,7 +51,7 @@ ROOT_URLCONF = 'foodz.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["templates"],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,7 +71,7 @@ WSGI_APPLICATION = 'foodz.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE" : "django.db.backends.postgresql_psycopg2",
-        "NAME" : "foodzn",
+        "NAME" : "foodz2",
         "HOST" : "localhost",
         "USER" : "sahal",
         "PASSWORD" : "1234",

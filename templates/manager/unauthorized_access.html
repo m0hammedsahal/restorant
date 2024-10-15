@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unauthorized Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4, #ffd1ff);
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            text-align: center;
+            animation: backgroundAnimation 10s ease infinite;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin: 0;
+            animation: fadeIn 2s ease forwards;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin: 20px 0 30px;
+            animation: fadeIn 3s ease forwards;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #ff6f61;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            animation: fadeIn 4s ease forwards;
+        }
+
+        .btn:hover {
+            background-color: #ff4b3a;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Unauthorized Access</h1>
+        <p>You can't access this page. You will be logged out shortly.</p>
+        <button class="btn" onclick="window.location.href='{% url 'manager:logout' %}'">Logout Now</button>
+    </div>
+
+    <script>
+        // Redirect to logout after a delay (e.g., 5 seconds)
+        setTimeout(function() {
+            window.location.href = "{% url 'manager:logout' %}";
+        }, 5000);  // 5-second delay before logging out
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+/* Search Bar Styling */
+#searchBar {
+    transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  #searchBar.show {
+    display: block;
+    height: auto;
+    opacity: 1;
+  }
+  
+  #searchBar.hidden {
+    display: none;
+    height: 0;
+    opacity: 0;
+  }
+  

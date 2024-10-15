@@ -1,0 +1,336 @@
+
+{% extends 'base/manager-base.html' %} 
+{% load static %} 
+{% block container %}
+
+<!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        
+    {% include 'include/manager-nav.html' %}
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Orders Table</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered zero-configuration">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>customer</th>
+                                                <th>order_id</th>
+                                                <th>total</th>
+                                                <th>address</th>
+                                                <th>order_item</th>
+                                                <th>order_status</th>
+                                                <th>order_status</th>
+                                                <th>Order Edit</th>
+                                                <th>Cancel</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for instance in instances %}
+                                            <tr>
+                                                <td>{{ instance.id }}</td>
+                                                <td>{{ instance.customer }}</td>
+                                                <td>{{ instance.order_id }}</td>
+                                                <td>{{ instance.total }}</td>
+                                                <td>{{ instance.address }}</td>
+
+                                                <td>
+                                                    {% for item in instance.order_item.all %}
+                                                        {{ item.product.name }} <!-- Display the product name -->
+                                                        <br>
+                                                    {% endfor %}
+                                                    in {{ instance.order_item.first.product.restorant.name }} <!-- Display the restaurant name once -->
+                                                </td>
+                                                <td class="hover-td relative button
+                                                {% if instance.order_status == 'Preparing' %}
+                                                bg-blue-600 text-white
+                                                {% elif instance.order_status == 'Ready for Pickup/Delivery' %}
+                                                bg-purple-600 text-white
+                                                {% elif instance.order_status == 'Dispatched' %}
+                                                bg-yellow-500 text-white
+                                                {% elif instance.order_status == 'Delivered' %}
+                                                bg-green-600 text-white
+                                                {% elif instance.order_status == 'Cancelled' %}
+                                                bg-red-600 text-white
+                                                {% endif %}">{{ instance.order_status }}
+                                                <a href="{% url 'manager:order_track' id=instance.id %}"><button type="button" class="hover-button btn btn-outline-primary">
+                                                    {% if instance.order_status == 'Preparing' %}
+                                                    Update Pickup
+                                                    {% elif instance.order_status == 'Ready for Pickup/Delivery' %}
+                                                    Update Dispatch
+                                                    {% elif instance.order_status == 'Dispatched' %}
+                                                    Update Delivery
+                                                    {% elif instance.order_status == 'Delivered' %}
+                                                    Delivered
+                                                    {% else %}
+                                                    cancelled
+                                                    {% endif %}
+                                                </button></a>
+                                                </td>
+                                                <td class="
+                                                {% if instance.order_status == 'Preparing' %}
+                                                bg-blue-600 text-white
+                                                {% elif instance.order_status == 'Ready for Pickup/Delivery' %}
+                                                bg-purple-600 text-white
+                                                {% elif instance.order_status == 'Dispatched' %}
+                                                bg-yellow-500 text-white
+                                                {% elif instance.order_status == 'Delivered' %}
+                                                bg-green-600 text-white
+                                                {% elif instance.order_status == 'Cancelled' %}
+                                                bg-red-600 text-white
+                                                {% endif %}" style="">{{ instance.order_status }}</td>
+                                                <td><a href="{% url 'manager:order_track' id=instance.id %}"><button type="button" class="btn mb-1 btn-outline-primary">
+                                                    {% if instance.order_status == 'Preparing' %}
+                                                    Update to Pickup
+                                                    {% elif instance.order_status == 'Ready for Pickup/Delivery' %}
+                                                    Update to Dispatch
+                                                    {% elif instance.order_status == 'Dispatched' %}
+                                                    Update to Delivery
+                                                    {% elif instance.order_status == 'Delivered' %} 
+                                                    Delivered
+                                                    {% else %}
+                                                    cancelled
+                                                    {% endif %}</button></a>
+                                                </td>
+                                                {% if instance.order_status != 'Cancelled' %}
+                                                <td><a href="{% url 'manager:cancel_order' id=instance.id %}"><button type="button" class="btn mb-1 btn-outline-danger">Cancel Order</button></a></td>
+                                                {% else %}
+                                                <td><button type="button" class="bg-red-500 text-white py-2 px-3 rounded-md border border-">Cancelled</button></td>
+
+                                                {% endif %}
+                                                <td><a href=""><button type="button" class="btn mb-1 btn-outline-danger">Delete</button></a></td>
+
+
+                                                <!-- d -->
+                                                <td><p class="
+                                                {% if instance.order_status != 'Preparing' %}
+                                                
+                                                {% else %}
+                                                bg-blue-600 text-white rounded-full p-3 shadow-md hover:bg-blue-700 hover:scale-110 animate-pulse
+                                                {% endif %}">Preparing</p> </td>
+                                                
+                                                {% if instance.order_status == 'Preparing' %}
+                                                <td><a href="{% url 'manager:order_track' id=instance.id %}"><button type="button" class="btn mb-1 btn-outline-primary">Update to Pickup</button></a></td>
+                                                {% elif instance.order_status == 'Ready for Pickup/Delivery' %}
+                                                <td class="text-center"><p class=" bg-purple-600 text-white rounded-full p-3 shadow-md hover:bg-purple-700 hover:scale-110 animate-bounce">Pickup</p> </td>
+                                                {% else %}
+                                                <td>Pickup </td>
+                                                {% endif %}
+                                                <!-- p -->
+                                                {% if instance.order_status == 'Ready for Pickup/Delivery' %}
+                                                <td><a href="{% url 'manager:order_track' id=instance.id %}"><button type="button" class="btn mb-1 btn-outline-primary">Update to Dispatche</button></a></td>
+                                                {% elif instance.order_status == 'Dispatched' %}
+                                                <td class="text-center"><p class=" bg-yellow-600 text-white rounded-full p-3 shadow-md hover:bg-yellow-700 hover:scale-110 animate-bounce">Pickup</p> </td>
+                                                {% else %}
+                                                <td>Not Dispatched</td>
+                                                {% endif %}
+                                                <!-- d -->
+                                                {% if instance.order_status == 'Dispatched' %}
+                                                <td><a href="{% url 'manager:order_track' id=instance.id %}"><button type="button" class="btn mb-1 btn-outline-primary">Update to Delivery</button></a></td>
+                                                {% elif instance.order_status == 'Delivered' %}
+                                                <td class="text-center"><p class=" bg-green-600 text-white rounded-full p-3 shadow-md hover:bg-green-700 hover:scale-110 animated pulse">Delivered</p> </td>
+                                                {% else %}
+                                                <td>Not Delivered</td>
+                                                {% endif %}
+                                                <!-- c -->
+                                                {% if instance.order_status == 'Cancelled' %}
+                                                <td class="text-center"><p class=" bg-red-600 text-white rounded-full p-3 shadow-md hover:bg-red-700 hover:scale-110 animate-pulse">Cancelled</p> </td>
+                                                {% elif instance.order_status == 'Delivered' %}
+                                                <td class="text-center"><p class="">Delivered</p> </td>
+                                                {% else %}
+                                                <td><a href="{% url 'manager:cancel_order' id=instance.id %}"><button type="button" class="btn mb-1 btn-outline-danger">Cancel Order</button></a></td>
+                                                {% endif %}
+                                                
+                                                <td>4</td>
+                                                <!-- Order Status Card -->
+                                                <td class="align-middle">
+                                                    <div class="flex items-center justify-center">
+                                                        <div class="rounded-full p-4 shadow-lg transition-all duration-300 ease-in-out
+                                                            {% if instance.order_status == 'Preparing' %}
+                                                            bg-blue-500 text-white hover:bg-blue-600 animate-pulse
+                                                            {% elif instance.order_status == 'Ready for Pickup/Delivery' %}
+                                                            bg-purple-500 text-white hover:bg-purple-600 animate-bounce
+                                                            {% elif instance.order_status == 'Dispatched' %}
+                                                            bg-yellow-500 text-white hover:bg-yellow-600 animate-bounce
+                                                            {% elif instance.order_status == 'Delivered' %}
+                                                            bg-green-500 text-white hover:bg-green-600 animate-pulse
+                                                            {% elif instance.order_status == 'Cancelled' %}
+                                                            bg-red-500 text-white hover:bg-red-600 animate-pulse
+                                                            {% else %}
+                                                            bg-gray-500 text-white
+                                                            {% endif %}">
+                                                            {{ instance.order_status }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Action Buttons for Each Order Status -->
+                                                {% if instance.order_status == 'Preparing' %}
+                                                <td class="align-middle">
+                                                    <a href="{% url 'manager:order_track' id=instance.id %}">
+                                                        <button type="button" class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 hover:scale-105 transition-all duration-300">
+                                                            Update to Pickup
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                {% elif instance.order_status == 'Ready for Pickup/Delivery' %}
+                                                <td class="align-middle">
+                                                    <a href="{% url 'manager:order_track' id=instance.id %}">
+                                                        <button type="button" class="px-4 py-2 bg-purple-500 text-white rounded-lg shadow-md hover:bg-purple-600 hover:scale-105 transition-all duration-300">
+                                                            Update to Dispatched
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                {% elif instance.order_status == 'Dispatched' %}
+                                                <td class="align-middle">
+                                                    <a href="{% url 'manager:order_track' id=instance.id %}">
+                                                        <button type="button" class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md hover:bg-yellow-600 hover:scale-105 transition-all duration-300">
+                                                            Update to Delivered
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                {% endif %}
+
+                                                <!-- Cancel Order Button -->
+                                                {% if instance.order_status not in 'Cancelled,Delivered' %}
+                                                <td class="align-middle">
+                                                    <a href="{% url 'manager:cancel_order' id=instance.id %}">
+                                                        <button type="button" class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 hover:scale-105 transition-all duration-300">
+                                                            Cancel Order
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                {% endif %}
+
+
+
+
+                                                
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>customer</th>
+                                                <th>order_id</th>
+                                                <th>total</th>
+                                                <th>address</th>
+                                                <th>order_item</th>
+                                                <th>order_status</th>
+                                                <th>Order Edit</th>
+                                                <th>Cancel</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+<style>
+    
+  
+  td.button {
+    border: 1px solid #ddd;
+    padding: 20px;
+    text-align: center;
+    position: relative; /* Set relative position to control the button's absolute positioning */
+    cursor: pointer;    /* Change cursor on hover */
+}
+
+/* Hide the button inside the <td> initially */
+.hover-button {
+    visibility: hidden;         /* Hide the button initially */
+    position: absolute;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    right: 0px;
+    bottom: 20px;
+    width: 100px;
+    overflow: hidden;       /* Set initial opacity to 0 */
+}
+
+/* Show the button when the <td> is hovered */
+.hover-td:hover .hover-button {
+    visibility: visible;        /* Make the button visible */
+    opacity: 1;                 /* Set opacity to 1 for smooth transition */
+}
+.hover-td:hover {
+    background: #ffff;
+}
+/* Optional styling for <a> tag wrapping the button */
+.hover-td a {
+    text-decoration: none; /* Remove underline */
+}
+
+
+</style>
+    {% endblock %}
