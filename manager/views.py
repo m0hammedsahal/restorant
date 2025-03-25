@@ -384,7 +384,6 @@ def food_item_add_f_cate(request, id):
         form = FooditemfcForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save(commit=False)
-            # Set the restaurant and food category
             instance.restorant = restorant
             instance.foodcategory = foodcategory
             instance.save()
@@ -463,6 +462,8 @@ def offers_add(request):
 
     return render(request, 'manager/forms/offers_add_form.html', {'form': form})
 
+
+
 def offers_edit(request, id):
     offercupen = get_object_or_404(OfferCupen, id=id)
 
@@ -519,7 +520,6 @@ def cancel_order(request, id):
     instance = Order.objects.get(id=id)
     instance.order_status = 'Cancelled'
     instance.save()
-
 
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

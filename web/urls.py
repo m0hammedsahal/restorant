@@ -34,6 +34,9 @@ urlpatterns = [
     
     path("ajaxlogin/", views.ajaxlogin, name="ajaxlogin"),
     path("validate_email/", views.validate_email, name="validate_email"),
+    
+    path("ajaxlogin2/", views.ajaxlogin2, name="ajaxlogin2"),
+    
     path('ajax/', views.ajax, name="ajax"),
     path('updatecart/', views.updatecart, name="updatecart"),
 ]

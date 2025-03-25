@@ -19,7 +19,6 @@ urlpatterns = [
     path("order/Track/<int:id>/", views.order_track, name="order_track"),
     path("order/Cancel/<int:id>/", views.cancel_order, name="cancel_order"),
 
-
     # path("store-category", views.store_category, name="store_category"),
     path("store-category/list/", views.store_category_list, name="store_category_list"),
     path("store-category/add/", views.store_category_add, name="store_category_add"),
@@ -63,5 +62,5 @@ urlpatterns = [
     # path("users", views.users, name="users"),
     path("users/list/", views.users_list, name="users_list"),
 
-  
+
 ]

@@ -18,3 +18,6 @@ def allow_manager(function):
                 return HttpResponseRedirect(reverse("manager:unauthorized_access"))
         return function(request, *args, **kwargs)
     return wrapper
+
+
+

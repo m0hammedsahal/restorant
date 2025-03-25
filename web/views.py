@@ -16,11 +16,13 @@ from decimal import Decimal  # Import Decimal for precise calculations
 
 from django.shortcuts import redirect
 from django.contrib import messages
-import random
-import string
+
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
+import random
+import string
+
 
 def generate_unique_order_id(length=8):
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
@@ -180,14 +182,13 @@ def add_cart(request, id):
     if previous:
         cart_store = previous.restorant
         if cart_store != singlerest:
-            # Redirect to confirmation page
             return redirect(reverse('web:confirm_delete_cart', kwargs={'id': id}))
     
     # Proceed to add the item to the cart
     cart = Cart.objects.create(
         customer=customer,
         product=product,
-        amouunt=product.price,
+        amouunt=product.price,  
         restorant=singlerest,
         quantity=1
     )
@@ -209,7 +210,6 @@ def add_cart_confirm(request, id):
     product = Fooditem.objects.get(id=id)
     singlerest = product.restorant
 
-    # Delete all previous cart items from a different store
     Cart.objects.filter(customer=customer).delete()
 
     # Add the new item to the cart
@@ -224,7 +224,6 @@ def add_cart_confirm(request, id):
     return HttpResponseRedirect(reverse('web:singlerest id=singlerest.id'))
 
 
-   
 
 def cart_plus(request, id):
     user=request.user
@@ -262,6 +261,8 @@ def calculate_cart_details(customer):
     cart_amount = carts.aggregate(Sum('amouunt'))['amouunt__sum'] or 0
     delivery_charges = 50 if carts.exists() else 0
     return cart_amount, delivery_charges
+
+
 
 
 def cart(request):
@@ -325,7 +326,6 @@ def cart(request):
         "selected_address": selected_address,
     }
     return render(request, 'web/cart.html', context=context)
-
 
 
 
@@ -492,9 +492,6 @@ def edit_address(request, id):
 
 
 
-
-
-
 @login_required(login_url='web:login')
 def set_address(request, id):
     user = request.user
@@ -509,15 +506,11 @@ def set_address(request, id):
 
 
 
-
-
-
 @login_required(login_url='web:login')
 def checkout(request):
     user = request.user
     customer = Customer.objects.get(user=user)
     
-    # Assuming CartItem is the model representing items in the cart, and it's linked to Customer
     cart_items = Cart.objects.filter(customer=customer)
 
     try:
@@ -529,7 +522,6 @@ def checkout(request):
         payment_method = request.POST.get('payment_method')
         selected_address = cart_bill.address if cart_bill else None
 
-        # Create a new order with the address and order ID
         new_order = Order.objects.create(
             customer=customer,
             item_total=cart_bill.item_total if cart_bill else 0,
@@ -537,12 +529,11 @@ def checkout(request):
             delivery=cart_bill.delivery_charges if cart_bill else 0,
             total=cart_bill.final_amount if cart_bill else 0,
             address=selected_address,
-            order_id=generate_unique_order_id(),  # Function to generate a unique order ID
+            order_id=generate_unique_order_id(),  
             payment_method=payment_method,
         )
         new_order.save()
 
-        # Create OrderItem objects for each item in the cart
         for cart_item in cart_items:
             order_item = OrderItem.objects.create(
                 order=new_order,
@@ -702,6 +693,28 @@ def ajaxlogin(request):
         return render(request,'web/ajaxlogin.html')
 
 
+
+
+def ajaxlogin2(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        print(email,password)
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            return JsonResponse (
+                {'success': True},
+                safe=False
+            )
+        else:
+            return JsonResponse (
+                {'success': False},
+                safe=True
+            )
+
+    else:
+        return render(request, 'web/ajaxlogin2.html')
+    
 
 
 

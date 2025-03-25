@@ -20,6 +20,7 @@ class Cart(models.Model):
     restorant = models.ForeignKey(Restorant, on_delete=models.CASCADE)
     amouunt = models.FloatField()
     quantity = models.IntegerField()
+    
 
     class Meta:
         db_table = 'customer_cart'
@@ -129,7 +130,7 @@ class Order(models.Model):
         ('Cancelled', 'Cancelled'),
     ]
 
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)    
     order_id = models.CharField(max_length=255, unique=True)
     item_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)

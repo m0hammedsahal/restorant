@@ -27,7 +27,7 @@
                 </div>
                 
                 <input type="password" name="password" placeholder="Enter Your Password" class="w-full outline-none border rounded-2xl py-3 px-5 mb-5">
-                <button type="submit" class="py-3 px-5 bg-red-500 text-white text-[14px] font-semibold rounded-xl">LOGIN</button>
+                <button id="btn" type="submit" class="py-3 px-5 bg-red-500 text-white text-[14px] font-semibold rounded-xl">LOGIN</button>
             </form>
             <p class="text-[14px] mt-5">Don't have an Account? <a href="{% url 'web:register' %}" class="text-[14px] text-red-500">Sign Up</a></p>
         </div>
@@ -51,7 +51,6 @@
                         } else {
                             feedbackSpan.html("<i class='bx bx-x-circle'></i>").removeClass("text-green-600").addClass("text-red-600");
                         }
-                        // Trigger the animation
                         
                     },
                     error: function(){
